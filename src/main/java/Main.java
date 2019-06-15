@@ -2,6 +2,11 @@ import Exceptions.IncorrectMembershipFunctionParameters;
 import MembershipFunctions.MembershipFunction;
 import MembershipFunctions.TriangularMembershipFunction;
 
+import Data.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args)
     {
@@ -11,5 +16,10 @@ public class Main {
         } catch (IncorrectMembershipFunctionParameters incorrectMembershipFunctionParameters) {
             incorrectMembershipFunctionParameters.printStackTrace();
         }
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        DataReader dataReader = new DataReader(databaseConnector);
+        List<Player> listofPlayers = new ArrayList<>();
+        dataReader.readData(listofPlayers);
     }
 }
