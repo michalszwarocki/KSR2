@@ -7,6 +7,8 @@ public class TriangularMembershipFunction implements MembershipFunction {
     private double a;
     private double b;
     private double c;
+    private ComplexInterface membershipFunction;
+    private MembershipFunction anotherFunction;
 
     public TriangularMembershipFunction(double a, double b, double c)
             throws IncorrectMembershipFunctionParameters {
@@ -17,9 +19,17 @@ public class TriangularMembershipFunction implements MembershipFunction {
         this.a = a;
         this.b = b;
         this.c = c;
+
+        membershipFunction = this::countMembership;
     }
 
-    public double countMembershipDegree(double x){
+    @Override
+    public ComplexInterface getFunction() {
+        return membershipFunction;
+    }
+
+    @Override
+    public double countMembership(double x){
 
         if (x < a || x > c)
             return 0;
@@ -30,5 +40,59 @@ public class TriangularMembershipFunction implements MembershipFunction {
             else
                 return (c-x)/(c-b);
         }
+    }
+
+    @Override
+    public double countStandardComplementMembership(double x) {
+        return 1 - countMembership(x);
+    }
+
+    @Override
+    public void setFunctionAsStandardComplement() {
+        this.membershipFunction = this::countStandardComplementMembership;
+    }
+
+    @Override
+    public double countStandardUnionMembership(double x) {
+        return Math.max(countMembership(x), anotherFunction.countMembership(x));
+    }
+
+    @Override
+    public void setFunctionAsStandardUnion(MembershipFunction another) {
+        this.anotherFunction = another;
+        this.membershipFunction = this::countStandardUnionMembership;
+    }
+
+    @Override
+    public double countStandardIntersectionMembership(double x) {
+        return Math.min(countMembership(x), anotherFunction.countMembership(x));
+    }
+
+    @Override
+    public void setFunctionAsStandardIntersection(MembershipFunction another) {
+        this.anotherFunction = another;
+        this.membershipFunction = this::countStandardIntersectionMembership;
+    }
+
+    @Override
+    public double countAlgebraicUnionMembership(double x) {
+        return countMembership(x) + anotherFunction.countMembership(x) - countMembership(x) * anotherFunction.countMembership(x);
+    }
+
+    @Override
+    public void setFunctionAsAlgebraicUnion(MembershipFunction another) {
+        this.anotherFunction = another;
+        this.membershipFunction = this::countAlgebraicUnionMembership;
+    }
+
+    @Override
+    public double countAlgebraicIntersectionMembership(double x) {
+        return countMembership(x) * anotherFunction.countMembership(x);
+    }
+
+    @Override
+    public void setFunctionAsAlgebraicIntersection(MembershipFunction another) {
+        this.anotherFunction = another;
+        this.membershipFunction = this::countAlgebraicIntersectionMembership;
     }
 }

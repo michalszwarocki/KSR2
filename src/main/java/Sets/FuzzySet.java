@@ -12,48 +12,102 @@ import java.util.List;
 @Setter
 public class FuzzySet extends Set {
 
-    private List<Double> xValues;
-    private List<Double> membershipDegrees;
-    private MembershipFunction membershipFunction;
-
     public FuzzySet(List<Double> xValues, MembershipFunction membershipFunction){
-        this.xValues = xValues;
-        this.membershipFunction = membershipFunction;
-        this.membershipDegrees = calculateAllMembershipDegrees(xValues,membershipFunction);
+        super(xValues, membershipFunction);
     }
 
-    public List<Double> calculateAllMembershipDegrees(List<Double> xValues, MembershipFunction membershipFunction){
-        List<Double> degrees = new ArrayList<Double>();
+    public double getHeight(){
+        return Collections.max(membershipDegrees);
+    }
 
-        for (double xValue : xValues) {
-            double degree = membershipFunction.countMembershipDegree(xValue);
-            degrees.add(degree);
+    public List<Double> getCore(){
+        List<Double> coreValues = new ArrayList<Double>();
+        for(int i=0; i<membershipDegrees.size(); i++)
+        {
+            if(membershipDegrees.get(i) == 1)
+            {
+                coreValues.add(xValues.get(i));
+            }
         }
 
-        return degrees;
+        return coreValues;
     }
 
-    public boolean isEmpty() {
-        for(double degree : membershipDegrees){
-            if (degree != 0)
-                return false;
+    public List<Double> getSupport(){
+        List<Double> supportValues = new ArrayList<Double>();
+        for(int i=0; i<membershipDegrees.size(); i++)
+        {
+            if(membershipDegrees.get(i) > 0)
+            {
+                supportValues.add(xValues.get(i));
+            }
         }
 
-        return true;
+        return supportValues;
     }
 
-    public boolean isNormal() {
-        if (Collections.max(membershipDegrees) == 1)
-            return true;
+    public List<Double> getAlfaSection(double alfa){
+        List<Double> alfaSectionValues = new ArrayList<Double>();
+        for(int i=0; i<membershipDegrees.size(); i++)
+        {
+            if(membershipDegrees.get(i) >= alfa)
+            {
+                alfaSectionValues.add(xValues.get(i));
+            }
+        }
 
-        return false;
+        return alfaSectionValues;
     }
 
-    public boolean isConvex() {
-        return false;
+    public FuzzySet getStandardComplement(){
+        MembershipFunction membershipFunction = this.membershipFunction;
+        membershipFunction.setFunctionAsStandardComplement();
+        FuzzySet complement = new FuzzySet(xValues, membershipFunction);
+        return complement;
     }
 
-    public boolean isConcave() {
-        return false;
+    public FuzzySet getStandardUnion(FuzzySet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsStandardUnion(another.membershipFunction);
+        FuzzySet union = new FuzzySet(unionValues, characteristicFunction);
+        return union;
     }
+
+    public FuzzySet getStandardIntersection(FuzzySet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsStandardIntersection(another.membershipFunction);
+        FuzzySet intersection = new FuzzySet(unionValues, characteristicFunction);
+        return intersection;
+    }
+
+    public FuzzySet getAlgebraicUnion(FuzzySet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsAlgebraicUnion(another.membershipFunction);
+        FuzzySet union = new FuzzySet(unionValues, characteristicFunction);
+        return union;
+    }
+
+    public FuzzySet getAlgebraicIntersection(FuzzySet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsAlgebraicIntersection(another.membershipFunction);
+        FuzzySet intersection = new FuzzySet(unionValues, characteristicFunction);
+        return intersection;
+    }
+
 }

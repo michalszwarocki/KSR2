@@ -1,10 +1,12 @@
 package Sets;
 
 import MembershipFunctions.CharacteristicFunction;
+import MembershipFunctions.MembershipFunction;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,91 +14,59 @@ import java.util.List;
 @Setter
 public class ClassicSet extends Set{
 
-    private List<Double> xValues;
-    private List<Double> membershipDegrees;
-    private CharacteristicFunction membershipFunction;
-
-    public ClassicSet(List<Double> xValues, CharacteristicFunction membershipFunction){
-        this.xValues = xValues;
-        this.membershipFunction = membershipFunction;
-        this.membershipDegrees = calculateAllMembershipDegrees(xValues,membershipFunction);
+    public ClassicSet(List<Double> xValues, MembershipFunction membershipFunction){
+        super(xValues, membershipFunction);
     }
 
-    public List<Double> calculateAllMembershipDegrees(List<Double> xValues, CharacteristicFunction membershipFunction){
-        List<Double> degrees = new ArrayList<Double>();
-
-        for (double xValue : xValues) {
-            double degree = membershipFunction.countMembershipDegree(xValue);
-            degrees.add(degree);
-        }
-
-        return degrees;
+    public ClassicSet getStandardComplement(){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        characteristicFunction.setFunctionAsStandardComplement();
+        ClassicSet complement = new ClassicSet(xValues, characteristicFunction);
+        return complement;
     }
 
-    public double getHeight(){
-        return Collections.max(membershipDegrees);
+    public ClassicSet getStandardUnion(ClassicSet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsStandardUnion(another.membershipFunction);
+        ClassicSet union = new ClassicSet(unionValues, characteristicFunction);
+        return union;
     }
 
-    public List<Double> getCore(){
-        List<Double> coreValues = new ArrayList<Double>();
-        for(int i=0; i<membershipDegrees.size(); i++)
-        {
-            if(membershipDegrees.get(i) == 1)
-            {
-                coreValues.add(xValues.get(i));
-            }
-        }
-
-        return coreValues;
+    public ClassicSet getStandardIntersection(ClassicSet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsStandardIntersection(another.membershipFunction);
+        ClassicSet intersection = new ClassicSet(unionValues, characteristicFunction);
+        return intersection;
     }
 
-    public List<Double> getSupport(){
-        List<Double> supportValues = new ArrayList<Double>();
-        for(int i=0; i<membershipDegrees.size(); i++)
-        {
-            if(membershipDegrees.get(i) > 0)
-            {
-                supportValues.add(xValues.get(i));
-            }
-        }
-
-        return supportValues;
+    public ClassicSet getAlgebraicUnion(ClassicSet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsAlgebraicUnion(another.membershipFunction);
+        ClassicSet union = new ClassicSet(unionValues, characteristicFunction);
+        return union;
     }
 
-    public List<Double> getAlfaSection(double alfa){
-        List<Double> alfaSectionValues = new ArrayList<Double>();
-        for(int i=0; i<membershipDegrees.size(); i++)
-        {
-            if(membershipDegrees.get(i) >= alfa)
-            {
-                alfaSectionValues.add(xValues.get(i));
-            }
-        }
-
-        return alfaSectionValues;
+    public ClassicSet getAlgebraicIntersection(ClassicSet another){
+        MembershipFunction characteristicFunction = this.membershipFunction;
+        List<Double> unionValues = new ArrayList<>(xValues);
+        List<Double> uniqueValues = new ArrayList<>(another.xValues);
+        uniqueValues.removeAll(xValues);
+        unionValues.addAll(uniqueValues);
+        characteristicFunction.setFunctionAsAlgebraicIntersection(another.membershipFunction);
+        ClassicSet intersection = new ClassicSet(unionValues, characteristicFunction);
+        return intersection;
     }
 
-    public boolean isEmpty() {
-        for(double degree : membershipDegrees){
-            if (degree != 0)
-                return false;
-        }
-
-        return true;
-    }
-
-    public boolean isNormal() {
-        if (getHeight() == 1)
-            return true;
-
-        return false;
-    }
-
-    public boolean isConvex() {
-        return false;
-    }
-
-    public boolean isConcave() {
-        return false;
-    }
 }
