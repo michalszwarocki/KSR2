@@ -15,5 +15,5 @@ public interface IDegree {
 
     double calculateDegree (Type2Summary secondTypeSummary);
 
-    List<Double> calculateDegree (Type2IntervalSummary firstTypeSummary);
+    List<Double> calculateDegree (Type2IntervalSummary secondTypeSummary);
 }

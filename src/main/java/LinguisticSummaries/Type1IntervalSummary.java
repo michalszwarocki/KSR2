@@ -16,14 +16,14 @@ import java.util.List;
 public class Type1IntervalSummary {
 
     //Q P verb S[T]
-    private Type2Quantifier quantifier;
+    private Quantifier quantifier;
     private String subject;
     private String verb;
     private Type2ComplexSummarizer summarizers;
     private List<IDegree> degrees;
     private List<Double> finalDegree;
 
-    public Type1IntervalSummary(Type2Quantifier quantifier, String subject, String verb,
+    public Type1IntervalSummary(Quantifier quantifier, String subject, String verb,
                                 Type2ComplexSummarizer summarizers, List<IDegree> degrees){
 
         this.quantifier = quantifier;

@@ -8,18 +8,16 @@ import LinguisticSummaries.Type2Summary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DegreeOfTruth implements IDegree {
+public class DegreeOfCovering implements IDegree{
+
     @Override
     public double calculateDegree(Type1Summary firstTypeSummary) {
         double r = firstTypeSummary.getSummarizers().getFuzzySet().getMembershipDegrees().stream()
-                .mapToDouble(a -> a).sum();
+                .mapToDouble(a -> a).filter(p -> p > 0).count();
         double m = firstTypeSummary.getSummarizers().getFuzzySet().getMembershipDegrees().stream()
                 .mapToDouble(a -> a).count();
 
-        if(firstTypeSummary.getQuantifier().getVariableName().equals("względny"))
-            return firstTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(r/m);
-        else
-            return firstTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(r);
+        return r/m;
     }
 
     @Override
@@ -27,24 +25,16 @@ public class DegreeOfTruth implements IDegree {
         List<Double> degrees = new ArrayList<>();
 
         double rLower = firstTypeSummary.getSummarizers().getType2FuzzySet().getMembershipDegrees().stream()
-                .mapToDouble(a -> a.get(0)).sum();
+                .mapToDouble(a -> a.get(0)).filter(p -> p > 0).count();
         double rUpper = firstTypeSummary.getSummarizers().getType2FuzzySet().getMembershipDegrees().stream()
-                .mapToDouble(a -> a.get(1)).sum();
+                .mapToDouble(a -> a.get(1)).filter(p -> p > 0).count();
         double mLower = firstTypeSummary.getSummarizers().getType2FuzzySet().getMembershipDegrees().stream()
                 .mapToDouble(a -> a.get(0)).count();
         double mUpper = firstTypeSummary.getSummarizers().getType2FuzzySet().getMembershipDegrees().stream()
                 .mapToDouble(a -> a.get(1)).count();
 
-        if(firstTypeSummary.getQuantifier().getVariableName().equals("względny"))
-        {
-            degrees.add(firstTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(rLower/mLower));
-            degrees.add(firstTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(rUpper/mUpper));
-        }
-        else
-        {
-            degrees.add(firstTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(rLower));
-            degrees.add(firstTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(rUpper));
-        }
+        degrees.add(rLower/mLower);
+        degrees.add(rUpper/mUpper);
 
         return degrees;
     }
@@ -53,11 +43,11 @@ public class DegreeOfTruth implements IDegree {
     public double calculateDegree(Type2Summary secondTypeSummary) {
         double r = secondTypeSummary.getSummarizers().getFuzzySet()
                 .tNorm(secondTypeSummary.getQualifier().getFuzzySet()).getMembershipDegrees().stream()
-                .mapToDouble(a -> a).sum();
+                .mapToDouble(a -> a).filter(p -> p > 0).count();
         double m = secondTypeSummary.getQualifier().getFuzzySet().getMembershipDegrees().stream()
-                .mapToDouble(a -> a).sum();
+                .mapToDouble(a -> a).filter(p -> p > 0).count();
 
-        return secondTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(r/m);
+        return r/m;
     }
 
     @Override
@@ -67,20 +57,18 @@ public class DegreeOfTruth implements IDegree {
         double rLower = secondTypeSummary.getSummarizers().getType2FuzzySet()
                 .tNorm(secondTypeSummary.getQualifier().getType2FuzzySet())
                 .getMembershipDegrees().stream()
-                .mapToDouble(a -> a.get(0)).sum();
+                .mapToDouble(a -> a.get(0)).filter(p -> p > 0).count();
         double rUpper = secondTypeSummary.getSummarizers().getType2FuzzySet()
                 .tNorm(secondTypeSummary.getQualifier().getType2FuzzySet())
                 .getMembershipDegrees().stream()
-                .mapToDouble(a -> a.get(1)).sum();
+                .mapToDouble(a -> a.get(1)).filter(p -> p > 0).count();
         double mLower = secondTypeSummary.getQualifier().getType2FuzzySet().getMembershipDegrees().stream()
-                .mapToDouble(a -> a.get(0)).sum();
+                .mapToDouble(a -> a.get(0)).filter(p -> p > 0).count();
         double mUpper = secondTypeSummary.getQualifier().getType2FuzzySet().getMembershipDegrees().stream()
-                .mapToDouble(a -> a.get(1)).sum();
-        double res = Math.min(Math.min(Math.min(rLower/mLower, rLower/mUpper), rUpper/mLower), rUpper/mUpper);
-        double res2 = Math.max(Math.min(Math.min(rLower/mLower, rLower/mUpper), rUpper/mLower), rUpper/mUpper);
+                .mapToDouble(a -> a.get(1)).filter(p -> p > 0).count();
 
-        degrees.add(secondTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(res));
-        degrees.add(secondTypeSummary.getQuantifier().getFuzzySet().calculateMembershipDegree(res2));
+        degrees.add(rLower/mLower);
+        degrees.add(rUpper/mUpper);
 
         return degrees;
     }

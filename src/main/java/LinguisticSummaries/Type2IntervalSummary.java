@@ -13,7 +13,7 @@ import java.util.List;
 public class Type2IntervalSummary {
 
     //Q P of Ql verb S[T]
-    private Type2Quantifier quantifier;
+    private Quantifier quantifier;
     private String subject;
     private Type2Qualifier qualifier;
     private String verb;
@@ -21,7 +21,7 @@ public class Type2IntervalSummary {
     private List<IDegree> degrees;
     private List<Double> finalDegree;
 
-    public Type2IntervalSummary(Type2Quantifier quantifier, String subject, Type2Qualifier qualifier,
+    public Type2IntervalSummary(Quantifier quantifier, String subject, Type2Qualifier qualifier,
                                 String verb, Type2ComplexSummarizer summarizers, List<IDegree> degrees){
         this.quantifier = quantifier;
         this.subject = subject;
