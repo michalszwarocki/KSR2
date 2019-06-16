@@ -19,8 +19,8 @@ public class Main {
     public static void main(String[] args)
     {
         try {
-            MembershipFunction lower = new TriangularMembershipFunction(5, 6, 7);
-            MembershipFunction m2 = new TriangularMembershipFunction(4, 6, 8);
+            MembershipFunction wysoki = new TriangularMembershipFunction(6, 7, 8);
+            MembershipFunction niski = new TriangularMembershipFunction(2, 2.5, 3);
             List<Double> xValues = new ArrayList<Double>(){
                 {
                     add(2.5);
@@ -33,9 +33,11 @@ public class Main {
                 }
             };
 
-            Type2FuzzySet s = new Type2FuzzySet(xValues, lower, m2);
+            FuzzySet s = new FuzzySet(xValues, wysoki);
+            FuzzySet s2 = new FuzzySet(xValues, niski);
+
             System.out.println(s.getMembershipDegrees());
-            System.out.println(s.getStandardComplement().getMembershipDegrees());
+            System.out.println(s.getStandardUnion(s2).getMembershipDegrees());
         } catch (IncorrectMembershipFunctionParameters incorrectMembershipFunctionParameters) {
             incorrectMembershipFunctionParameters.printStackTrace();
         }
