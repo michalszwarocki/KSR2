@@ -48,7 +48,7 @@ public class Type2Summary {
     }
 
     public String composeLinguisticSummary(){
-        String summary = quantifier.getVariableValue() + " " + subject + " będących " + qualifier.getVariableValue()
+        String summary = quantifier.getVariableValue() + " " + subject + " mających " + qualifier.getVariableValue()
                 + " " + verb + " " + summarizers.getVariableValue() + " [" + finalDegree + "]";
 
         return summary;

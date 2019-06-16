@@ -54,7 +54,7 @@ public class Type2IntervalSummary {
     }
 
     public String composeLinguisticSummary(){
-        String summary = quantifier.getVariableValue() + " " + subject + " będących " + qualifier.getVariableValue()
+        String summary = quantifier.getVariableValue() + " " + subject + " mających " + qualifier.getVariableValue()
                 + " " + verb + " " + summarizers.getVariableValue() + " [" + finalDegree.get(0) +", " +
                 finalDegree.get(1) + "]";
 
