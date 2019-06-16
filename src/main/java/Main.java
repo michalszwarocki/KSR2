@@ -1,4 +1,8 @@
+import Degrees.DegreeOfTruth;
+import Degrees.IDegree;
 import Exceptions.IncorrectMembershipFunctionParameters;
+import LinguisticSummaries.Type1IntervalSummary;
+import LinguisticSummaries.Type1Summary;
 import MembershipFunctions.CharacteristicFunction;
 import MembershipFunctions.MembershipFunction;
 import MembershipFunctions.TrapezoidMembershipFuncton;
@@ -12,8 +16,7 @@ import java.util.List;
 
 import Data.*;
 import Sets.Type2FuzzySet;
-import Variables.Type2ComplexSummarizer;
-import Variables.Type2SimpleSummarizer;
+import Variables.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +25,12 @@ public class Main {
     public static void main(String[] args)
     {
         try {
-            MembershipFunction wysoki1 = new TriangularMembershipFunction(6, 7, 8);
-            MembershipFunction wysoki2 = new TriangularMembershipFunction(5, 7, 9);
-            MembershipFunction chory1 = new TriangularMembershipFunction(2, 2.5, 3);
-            MembershipFunction chory2 = new TriangularMembershipFunction(1,2.5, 3.5);
+            MembershipFunction wysoki1 = new TriangularMembershipFunction(5, 7, 8);
+            MembershipFunction wysoki2 = new TriangularMembershipFunction(4, 7, 9);
+            MembershipFunction chory1 = new TriangularMembershipFunction(2, 2.5, 4);
+            MembershipFunction chory2 = new TriangularMembershipFunction(1.5, 2.5, 4.5);
+            MembershipFunction quant = new TriangularMembershipFunction(0.2, 0.5, 0.8);
+            MembershipFunction quant2 = new TriangularMembershipFunction(0.15, 0.5, 0.85);
             List<Double> xValues = new ArrayList<Double>(){
                 {
                     add(2.5);
@@ -52,6 +57,7 @@ public class Main {
 
             Type2FuzzySet s = new Type2FuzzySet(xValues, wysoki1, wysoki2);
             Type2FuzzySet s2 = new Type2FuzzySet(xValues2, chory1, chory2);
+            Type2FuzzySet s3 = new Type2FuzzySet(xValues, quant, quant2);
             Type2SimpleSummarizer sum1 = new Type2SimpleSummarizer("sumaryzator prosty",
                     "wysoki", s);
             Type2SimpleSummarizer sum2 = new Type2SimpleSummarizer("sumaryzator prosty",
@@ -73,7 +79,16 @@ public class Main {
             Type2ComplexSummarizer complexSummarizer = new Type2ComplexSummarizer("sumaryzator złożony",
                     "wysoki lub chory", listof, conj);
 
-            System.out.println(complexSummarizer.getType2FuzzySet().getMembershipDegrees());
+            Type2Quantifier quantifier = new Type2Quantifier("względny", "Około połowa", s3);
+            List<IDegree> degrees = new ArrayList<IDegree>()
+            {
+                {
+                    add(new DegreeOfTruth());
+                }
+            };
+            Type1IntervalSummary summary = new Type1IntervalSummary(quantifier, "osób", "jest", complexSummarizer, degrees);
+
+            System.out.println(summary.composeLinguisticSummary());
         } catch (IncorrectMembershipFunctionParameters incorrectMembershipFunctionParameters) {
             incorrectMembershipFunctionParameters.printStackTrace();
         }

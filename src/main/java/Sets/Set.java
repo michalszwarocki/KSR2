@@ -23,6 +23,11 @@ public abstract class Set {
         this.membershipDegrees = calculateAllMembershipDegrees(xValues, membershipFunction);
     }
 
+    public double calculateMembershipDegree(double xValue)
+    {
+        return membershipFunction.getFunction().countMembershipDegree(xValue);
+    }
+
     public List<Double> calculateAllMembershipDegrees(List<Double> xValues, MembershipFunction membershipFunction){
         List<Double> degrees = new ArrayList<Double>();
 

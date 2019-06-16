@@ -26,6 +26,16 @@ public class Type2FuzzySet {
         this.membershipDegrees = calculateAllMembershipDegrees(xValues, lowerMembershipFunction, upperMembershipFunction);
     }
 
+    public List<Double> calculateMembershipDegree(double xValue)
+    {
+        List<Double> degrees = new ArrayList<>();
+
+        degrees.add(lowerMembershipFunction.getFunction().countMembershipDegree(xValue));
+        degrees.add(upperMembershipFunction.getFunction().countMembershipDegree(xValue));
+
+        return degrees;
+    }
+
     public List<List<Double>> calculateAllMembershipDegrees(List<Double> xValues, MembershipFunction lowerMembershipFunction,
                                                             MembershipFunction upperMembershipFunction){
         List<List<Double>> degrees = new ArrayList<>();
