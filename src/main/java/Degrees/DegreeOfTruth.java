@@ -56,7 +56,7 @@ public class DegreeOfTruth implements IDegree {
     @Override
     public double calculateDegree(Type2Summary secondTypeSummary) {
         double r = secondTypeSummary.getSummarizers().getFuzzySet()
-                .getStandardIntersection(secondTypeSummary.getQualifier().getFuzzySet()).getMembershipDegrees().stream()
+                .tNorm(secondTypeSummary.getQualifier().getFuzzySet()).getMembershipDegrees().stream()
                 .mapToDouble(a -> a).sum();
         double m = secondTypeSummary.getQualifier().getFuzzySet().getMembershipDegrees().stream()
                 .mapToDouble(a -> a).count();
@@ -69,11 +69,11 @@ public class DegreeOfTruth implements IDegree {
         List<Double> degrees = new ArrayList<>();
 
         double rLower = secondTypeSummary.getSummarizers().getType2FuzzySet()
-                .getStandardIntersection(secondTypeSummary.getQualifier().getType2FuzzySet())
+                .tNorm(secondTypeSummary.getQualifier().getType2FuzzySet())
                 .getMembershipDegrees().stream()
                 .mapToDouble(a -> a.get(0)).sum();
         double rUpper = secondTypeSummary.getSummarizers().getType2FuzzySet()
-                .getStandardIntersection(secondTypeSummary.getQualifier().getType2FuzzySet())
+                .tNorm(secondTypeSummary.getQualifier().getType2FuzzySet())
                 .getMembershipDegrees().stream()
                 .mapToDouble(a -> a.get(1)).sum();
         double mLower = secondTypeSummary.getQualifier().getType2FuzzySet().getMembershipDegrees().stream()

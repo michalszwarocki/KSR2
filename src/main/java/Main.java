@@ -1,3 +1,4 @@
+import Degrees.DegreeOfImprecision;
 import Degrees.DegreeOfTruth;
 import Degrees.IDegree;
 import Exceptions.IncorrectMembershipFunctionParameters;
@@ -60,7 +61,7 @@ public class Main {
             List<IDegree> degrees = new ArrayList<IDegree>()
             {
                 {
-                    add(new DegreeOfTruth());
+                    add(new DegreeOfImprecision());
                 }
             };
             Type1IntervalSummary summary = new Type1IntervalSummary(quantifier, "piłkarzy", "ma", complexSummarizer, degrees);
