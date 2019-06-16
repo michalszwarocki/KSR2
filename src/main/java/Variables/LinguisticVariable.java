@@ -2,17 +2,12 @@ package Variables;
 
 import Sets.FuzzySet;
 
-public class LinguisticVariable {
+public abstract class LinguisticVariable {
 
-    private String variableName;
-    private String variableValue;
-    private FuzzySet fuzzySet;
+    protected String variableName;
+    protected String variableValue;
+    protected FuzzySet fuzzySet;
 
-    public LinguisticVariable(String variableName, String variableValue, FuzzySet fuzzySet){
-        this.variableValue = variableValue;
-        this.variableName = variableName;
-        this.fuzzySet = fuzzySet;
-    }
 
     public FuzzySet getFuzzySet() {
         return fuzzySet;
