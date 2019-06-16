@@ -29,7 +29,7 @@ public class ComplexSummarizer extends LinguisticVariable{
         FuzzySet fuzzySet = listOfSummarizers.get(0).getFuzzySet();
         for (int i=0; i < conjunctions.size(); i++){
             if(conjunctions.get(i).equals("i")){
-                fuzzySet = fuzzySet.getStandardIntersection(listOfSummarizers.get(i+1).getFuzzySet());
+                fuzzySet = fuzzySet.tNorm(listOfSummarizers.get(i+1).getFuzzySet());
             }
             else{
                 fuzzySet = fuzzySet.getStandardUnion(listOfSummarizers.get(i+1).getFuzzySet());

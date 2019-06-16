@@ -110,4 +110,17 @@ public class FuzzySet extends Set {
         return intersection;
     }
 
+    public FuzzySet tNorm(FuzzySet another){
+        FuzzySet tNormFuzzySet = this;
+        List<Double> tNormValues = new ArrayList<>();
+        for( int i = 0; i < this.membershipDegrees.size(); i++)
+        {
+            tNormValues.add(Math.min(this.membershipDegrees.get(i), another.membershipDegrees.get(i)));
+        }
+
+        tNormFuzzySet.setMembershipDegrees(tNormValues);
+
+        return tNormFuzzySet;
+    }
+
 }

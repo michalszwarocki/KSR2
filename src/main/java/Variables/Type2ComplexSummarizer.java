@@ -29,7 +29,7 @@ public class Type2ComplexSummarizer extends Type2LinguisticVariable{
         Type2FuzzySet fuzzySet = listOfSummarizers.get(0).getType2FuzzySet();
         for (int i=0; i < conjunctions.size(); i++){
             if(conjunctions.get(i).equals("i")){
-                fuzzySet = fuzzySet.getStandardIntersection(listOfSummarizers.get(i+1).getType2FuzzySet());
+                fuzzySet = fuzzySet.tNorm(listOfSummarizers.get(i+1).getType2FuzzySet());
             }
             else{
                 fuzzySet = fuzzySet.getStandardUnion(listOfSummarizers.get(i+1).getType2FuzzySet());

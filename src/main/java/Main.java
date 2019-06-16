@@ -25,12 +25,12 @@ public class Main {
     public static void main(String[] args)
     {
         try {
-            MembershipFunction wysoki1 = new TriangularMembershipFunction(5, 7, 8);
-            MembershipFunction wysoki2 = new TriangularMembershipFunction(4, 7, 9);
-            MembershipFunction chory1 = new TriangularMembershipFunction(2, 2.5, 4);
-            MembershipFunction chory2 = new TriangularMembershipFunction(1.5, 2.5, 4.5);
-            MembershipFunction quant = new TriangularMembershipFunction(0.2, 0.5, 0.8);
-            MembershipFunction quant2 = new TriangularMembershipFunction(0.15, 0.5, 0.85);
+            MembershipFunction wysoki1 = new TriangularMembershipFunction(3, 7, 8);
+            MembershipFunction wysoki2 = new TriangularMembershipFunction(2, 7, 9);
+            MembershipFunction chory1 = new TriangularMembershipFunction(1.1, 2.5, 7.0);
+            MembershipFunction chory2 = new TriangularMembershipFunction(1.0, 2.5, 8.0);
+            MembershipFunction quant = new TriangularMembershipFunction(0.1, 0.5, 0.9);
+            MembershipFunction quant2 = new TriangularMembershipFunction(0.01, 0.5, 0.99);
             List<Double> xValues = new ArrayList<Double>(){
                 {
                     add(2.5);
@@ -72,7 +72,7 @@ public class Main {
 
             List<String> conj = new ArrayList<String>(){
                 {
-                    add("lub");
+                    add("i");
                 }
             };
 

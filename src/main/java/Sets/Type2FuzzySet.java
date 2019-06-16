@@ -161,4 +161,21 @@ public class Type2FuzzySet {
         Type2FuzzySet intersection = new Type2FuzzySet(unionValues, lowerMembershipFunction, upperMembershipFunction);
         return intersection;
     }
+
+    public Type2FuzzySet tNorm(Type2FuzzySet another){
+        Type2FuzzySet tNormFuzzySet = this;
+        List<List<Double>> tNormValues = new ArrayList<>();
+        for( int i = 0; i < this.membershipDegrees.size(); i++)
+        {
+            List<Double> degrees = new ArrayList<>();
+            degrees.add(Math.min(this.membershipDegrees.get(i).get(0), another.membershipDegrees.get(i).get(0)));
+            degrees.add(Math.min(this.membershipDegrees.get(i).get(1), another.membershipDegrees.get(i).get(1)));
+
+            tNormValues.add(degrees);
+        }
+
+        tNormFuzzySet.setMembershipDegrees(tNormValues);
+
+        return tNormFuzzySet;
+    }
 }
