@@ -1,10 +1,13 @@
 package MembershipFunctions;
 
 import Exceptions.IncorrectMembershipFunctionParameters;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 
-
+@Getter
+@Setter
 public class CharacteristicFunction implements MembershipFunction{
 
     private double a;
@@ -24,6 +27,21 @@ public class CharacteristicFunction implements MembershipFunction{
     @Override
     public ComplexInterface getFunction() {
         return membershipFunction;
+    }
+
+    @Override
+    public double getWidth() {
+        return b - a;
+    }
+
+    @Override
+    public double getMin() {
+        return a;
+    }
+
+    @Override
+    public double getMax() {
+        return b;
     }
 
     @Override

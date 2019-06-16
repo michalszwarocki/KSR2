@@ -1,7 +1,11 @@
 package MembershipFunctions;
 
 import Exceptions.IncorrectMembershipFunctionParameters;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TriangularMembershipFunction implements MembershipFunction {
 
     private double a;
@@ -26,6 +30,21 @@ public class TriangularMembershipFunction implements MembershipFunction {
     @Override
     public ComplexInterface getFunction() {
         return membershipFunction;
+    }
+
+    @Override
+    public double getWidth() {
+        return c - a;
+    }
+
+    @Override
+    public double getMin() {
+        return a;
+    }
+
+    @Override
+    public double getMax() {
+        return c;
     }
 
     @Override

@@ -5,6 +5,12 @@ import java.util.function.Function;
 public interface MembershipFunction {
     ComplexInterface getFunction();
 
+    double getWidth();
+
+    double getMin();
+
+    double getMax();
+
     double countMembership(double x);
 
     double countStandardComplementMembership(double x);

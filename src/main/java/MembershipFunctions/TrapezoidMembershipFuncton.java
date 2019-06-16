@@ -1,7 +1,11 @@
 package MembershipFunctions;
 
 import Exceptions.IncorrectMembershipFunctionParameters;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TrapezoidMembershipFuncton implements MembershipFunction {
 
     private double a;
@@ -28,6 +32,21 @@ public class TrapezoidMembershipFuncton implements MembershipFunction {
     @Override
     public ComplexInterface getFunction() {
         return membershipFunction;
+    }
+
+    @Override
+    public double getWidth() {
+        return d - a;
+    }
+
+    @Override
+    public double getMin() {
+        return a;
+    }
+
+    @Override
+    public double getMax() {
+        return d;
     }
 
     @Override

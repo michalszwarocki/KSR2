@@ -4,12 +4,9 @@ import LinguisticSummaries.Type1IntervalSummary;
 import LinguisticSummaries.Type1Summary;
 import LinguisticSummaries.Type2IntervalSummary;
 import LinguisticSummaries.Type2Summary;
-import Variables.SimpleSummarizer;
-import Variables.Type2SimpleSummarizer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class DegreeOfImprecision implements IDegree {
     @Override
