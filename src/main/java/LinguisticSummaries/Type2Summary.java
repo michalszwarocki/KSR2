@@ -20,6 +20,11 @@ public class Type2Summary {
     private String verb;
     private ComplexSummarizer summarizers;
     private List<IDegree> degrees;
+
+    public double getFinalDegree() {
+        return finalDegree;
+    }
+
     private double finalDegree;
 
     public Type2Summary(Quantifier quantifier, String subject, Qualifier qualifier,

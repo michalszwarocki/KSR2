@@ -18,6 +18,11 @@ public class Type1Summary {
     private String verb;
     private ComplexSummarizer summarizers;
     private List<IDegree> degrees;
+
+    public double getFinalDegree() {
+        return finalDegree;
+    }
+
     private double finalDegree;
 
     public Type1Summary(Quantifier quantifier, String subject, String verb, ComplexSummarizer summarizers, List<IDegree> degrees){

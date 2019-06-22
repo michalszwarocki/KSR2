@@ -91,11 +91,11 @@ public class Main {
 
 */
 
-//        WindowMain.main(args);
+        WindowMain.main(args);
 
 
 
-///*
+/*
 
 
         try {
@@ -154,7 +154,7 @@ public class Main {
             incorrectMembershipFunctionParameters.printStackTrace();
         }
 
-//        */
+        */
 
 
     }
